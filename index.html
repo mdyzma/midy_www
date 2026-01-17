@@ -15,11 +15,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Typography & Base */
+        /* Typography & Base - GRAY-BLUE THEME */
+        /* Background is Slate-900 (Deep Gray-Blue), Text is Slate-200 */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #020617;
-            color: #f8fafc;
+            background-color: #0f172a;
+            color: #e2e8f0;
         }
 
         .font-mono {
@@ -28,11 +29,12 @@
 
         /* Utilities */
         .text-glow {
-            text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
         }
 
+        /* Sky Blue Glow */
         .border-glow {
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
         }
 
         /* Animations */
@@ -48,35 +50,37 @@
             transform: none;
         }
 
-        /* Card Hover Effects */
+        /* Card Hover Effects - Adjusted for Gray-Blue */
+        /* Cards are Slate-800, Hover pushes to lighter Slate-700/Border Sky-500 */
         .blog-card:hover {
             transform: translateY(-4px);
+            border-color: #38bdf8;
         }
 
         .tech-pill:hover {
             background-color: #1e293b;
-            border-color: #34d399;
-            color: #34d399;
+            border-color: #38bdf8;
+            color: #38bdf8;
             transform: translateY(-2px);
         }
 
         .tech-pill:hover i {
-            color: #34d399;
+            color: #38bdf8;
         }
 
         /* Schematic Icon Hover Effects */
         .group:hover .schematic-border {
-            border-color: #34d399;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
         }
 
         .group:hover .schematic-dot {
-            background-color: #34d399;
-            box-shadow: 0 0 5px rgba(52, 211, 153, 0.5);
+            background-color: #38bdf8;
+            box-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
         }
 
         .group:hover .schematic-line {
-            background-color: #34d399;
+            background-color: #38bdf8;
         }
 
         /* Custom Scrollbar */
@@ -116,22 +120,22 @@
     </style>
 </head>
 
-<body class="antialiased selection:bg-emerald-500 selection:text-white">
+<body class="antialiased selection:bg-sky-500 selection:text-white">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+    <nav class="fixed w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="font-mono text-lg font-bold tracking-tighter text-emerald-400">
-                &lt;Data_Architect /&gt;
+            <div class="font-mono text-lg font-bold tracking-tighter text-sky-400">
+                &lt;Michal_Dyzma /&gt;
             </div>
             <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
-                <a href="#about" class="hover:text-emerald-400 transition-colors">Philosophy</a>
-                <a href="#stack" class="hover:text-emerald-400 transition-colors">Stack</a>
-                <a href="#blog" class="hover:text-emerald-400 transition-colors">Engineering Logs</a>
-                <a href="#contact" class="hover:text-emerald-400 transition-colors">Connect</a>
+                <a href="#about" class="hover:text-sky-400 transition-colors">Philosophy</a>
+                <a href="#stack" class="hover:text-sky-400 transition-colors">Stack</a>
+                <a href="#blog" class="hover:text-sky-400 transition-colors">Engineering Logs</a>
+                <a href="#contact" class="hover:text-sky-400 transition-colors">Connect</a>
             </div>
             <a href="#blog"
-                class="px-4 py-2 text-xs font-bold uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/50 rounded hover:bg-emerald-500 hover:text-slate-950 transition-all">
+                class="px-4 py-2 text-xs font-bold uppercase tracking-widest bg-slate-800 text-sky-400 border border-slate-600 rounded hover:bg-sky-500 hover:text-slate-900 hover:border-sky-500 transition-all">
                 Read Blog
             </a>
         </div>
@@ -139,34 +143,35 @@
 
     <!-- Hero Section -->
     <section class="min-h-screen flex flex-col justify-center relative pt-20">
-        <!-- Background Grid Decoration -->
+        <!-- Background Grid Decoration (Subtle Blue Grid) -->
         <div class="absolute inset-0 z-0 opacity-20 pointer-events-none"
-            style="background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 30px 30px;">
+            style="background-image: radial-gradient(#64748b 1px, transparent 1px); background-size: 30px 30px;">
         </div>
 
         <div class="container mx-auto px-6 z-10">
             <div class="max-w-4xl">
-                <p class="font-mono text-emerald-400 mb-4 text-sm">
+                <p class="font-mono text-sky-400 mb-4 text-sm">
                     // INITIALIZING PIPELINES...
                 </p>
-                <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6 text-slate-100">
                     Turning Raw Data into <br />
                     <span id="typewriter"
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400"></span><span
-                        class="cursor-blink text-emerald-400">_</span>
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400"></span><span
+                        class="cursor-blink text-sky-400">_</span>
                 </h1>
                 <p class="text-xl text-slate-400 max-w-2xl leading-relaxed mb-10">
                     I build the engines that power modern AI. Specializing in high-throughput
-                    <strong>ETL pipelines</strong>, <strong>Vector RAG systems</strong>, and
-                    <strong>Autonomous Agent workflows</strong>.
+                    <strong class="text-slate-200">ETL pipelines</strong>, <strong class="text-slate-200">Vector RAG
+                        systems</strong>, and
+                    <strong class="text-slate-200">Autonomous Agent workflows</strong>.
                 </p>
                 <div class="flex flex-wrap gap-4">
                     <a href="#stack"
-                        class="px-8 py-4 bg-emerald-500 text-slate-950 font-bold rounded hover:bg-emerald-400 transition-colors">
+                        class="px-8 py-4 bg-sky-600 text-white font-bold rounded hover:bg-sky-500 transition-colors shadow-lg shadow-sky-900/50">
                         View Tech Stack
                     </a>
                     <a href="#blog"
-                        class="px-8 py-4 bg-slate-800 text-white font-bold rounded border border-slate-700 hover:border-emerald-500/50 transition-colors">
+                        class="px-8 py-4 bg-slate-800 text-slate-200 font-bold rounded border border-slate-600 hover:border-sky-500/50 hover:text-sky-400 transition-colors">
                         Latest Research
                     </a>
                 </div>
@@ -180,46 +185,46 @@
     </section>
 
     <!-- Automation Philosophy (Services) -->
-    <section id="about" class="py-24 bg-slate-900 border-t border-slate-800">
+    <section id="about" class="py-24 bg-slate-800/50 border-t border-slate-700">
         <div class="container mx-auto px-6">
             <div class="mb-16 fade-in-section">
-                <h2 class="text-3xl font-bold mb-4">Core Competencies</h2>
-                <div class="h-1 w-20 bg-emerald-500"></div>
+                <h2 class="text-3xl font-bold mb-4 text-slate-100">Core Competencies</h2>
+                <div class="h-1 w-20 bg-sky-500"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Card 1: Data Engineering -->
                 <div
-                    class="group bg-slate-950 p-8 rounded-xl border border-slate-800 hover:border-emerald-500/30 transition-all fade-in-section">
-                    <!-- CSS Icon: Server Stack -->
+                    class="group bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-sky-500/30 transition-all fade-in-section">
+                    <!-- CSS Icon: Server Stack (Blue-Gray Theme) -->
                     <div
                         class="w-12 h-12 flex flex-col justify-between mb-6 opacity-80 group-hover:opacity-100 transition-opacity">
                         <!-- Server Unit 1 -->
                         <div
-                            class="schematic-border h-2.5 w-full border-2 border-slate-600 rounded-[2px] bg-slate-900 flex items-center px-1.5 gap-1.5 transition-colors">
-                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-600 transition-colors"></div>
-                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-600 transition-colors delay-75">
+                            class="schematic-border h-2.5 w-full border-2 border-slate-500 rounded-[2px] bg-slate-900 flex items-center px-1.5 gap-1.5 transition-colors">
+                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-500 transition-colors"></div>
+                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-500 transition-colors delay-75">
                             </div>
                         </div>
                         <!-- Server Unit 2 -->
                         <div
-                            class="schematic-border h-2.5 w-full border-2 border-slate-600 rounded-[2px] bg-slate-900 flex items-center px-1.5 gap-1.5 transition-colors">
-                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-600 transition-colors delay-100">
+                            class="schematic-border h-2.5 w-full border-2 border-slate-500 rounded-[2px] bg-slate-900 flex items-center px-1.5 gap-1.5 transition-colors">
+                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-500 transition-colors delay-100">
                             </div>
-                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-600 transition-colors delay-150">
+                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-500 transition-colors delay-150">
                             </div>
                         </div>
                         <!-- Server Unit 3 -->
                         <div
-                            class="schematic-border h-2.5 w-full border-2 border-slate-600 rounded-[2px] bg-slate-900 flex items-center px-1.5 gap-1.5 transition-colors">
-                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-600 transition-colors delay-200">
+                            class="schematic-border h-2.5 w-full border-2 border-slate-500 rounded-[2px] bg-slate-900 flex items-center px-1.5 gap-1.5 transition-colors">
+                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-500 transition-colors delay-200">
                             </div>
-                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-600 transition-colors delay-300">
+                            <div class="schematic-dot w-1 h-1 rounded-full bg-slate-500 transition-colors delay-300">
                             </div>
                         </div>
                     </div>
 
-                    <h3 class="text-xl font-bold mb-3 text-emerald-100">Data Engineering</h3>
+                    <h3 class="text-xl font-bold mb-3 text-sky-100">Data Engineering</h3>
                     <p class="text-slate-400 leading-relaxed">
                         Designing robust ELT/ETL architectures using Airflow, DBT, and Spark.
                         Ensuring data quality and lineage for downstream AI consumption.
@@ -227,44 +232,44 @@
                 </div>
 
                 <!-- Card 2: AI Integration -->
-                <div class="group bg-slate-950 p-8 rounded-xl border border-slate-800 hover:border-emerald-500/30 transition-all fade-in-section"
+                <div class="group bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-sky-500/30 transition-all fade-in-section"
                     style="transition-delay: 100ms;">
                     <!-- CSS Icon: Neural Node -->
                     <div class="w-12 h-12 mb-6 opacity-80 group-hover:opacity-100 transition-opacity relative">
                         <!-- Central Processor -->
                         <div
-                            class="schematic-border w-6 h-6 absolute top-3 left-3 border-2 border-slate-600 bg-slate-900 rounded-full transition-colors z-10 flex items-center justify-center">
-                            <div class="schematic-dot w-2 h-2 bg-slate-600 transition-colors rounded-full"></div>
+                            class="schematic-border w-6 h-6 absolute top-3 left-3 border-2 border-slate-500 bg-slate-900 rounded-full transition-colors z-10 flex items-center justify-center">
+                            <div class="schematic-dot w-2 h-2 bg-slate-500 transition-colors rounded-full"></div>
                         </div>
 
                         <!-- Connecting Lines (Traces) -->
-                        <div class="schematic-line absolute top-1/2 left-0 w-3 h-0.5 bg-slate-700 transition-colors">
+                        <div class="schematic-line absolute top-1/2 left-0 w-3 h-0.5 bg-slate-600 transition-colors">
                         </div>
-                        <div class="schematic-line absolute top-1/2 right-0 w-3 h-0.5 bg-slate-700 transition-colors">
-                        </div>
-                        <div
-                            class="schematic-line absolute left-1/2 top-0 w-0.5 h-3 bg-slate-700 -translate-x-1/2 transition-colors">
+                        <div class="schematic-line absolute top-1/2 right-0 w-3 h-0.5 bg-slate-600 transition-colors">
                         </div>
                         <div
-                            class="schematic-line absolute left-1/2 bottom-0 w-0.5 h-3 bg-slate-700 -translate-x-1/2 transition-colors">
+                            class="schematic-line absolute left-1/2 top-0 w-0.5 h-3 bg-slate-600 -translate-x-1/2 transition-colors">
+                        </div>
+                        <div
+                            class="schematic-line absolute left-1/2 bottom-0 w-0.5 h-3 bg-slate-600 -translate-x-1/2 transition-colors">
                         </div>
 
                         <!-- Satellite Nodes -->
                         <div
-                            class="schematic-dot absolute top-1 left-1 w-1.5 h-1.5 bg-slate-600 rounded-full transition-colors">
+                            class="schematic-dot absolute top-1 left-1 w-1.5 h-1.5 bg-slate-500 rounded-full transition-colors">
                         </div>
                         <div
-                            class="schematic-dot absolute bottom-1 right-1 w-1.5 h-1.5 bg-slate-600 rounded-full transition-colors">
+                            class="schematic-dot absolute bottom-1 right-1 w-1.5 h-1.5 bg-slate-500 rounded-full transition-colors">
                         </div>
                         <div
-                            class="schematic-dot absolute top-1 right-1 w-1.5 h-1.5 bg-slate-600 rounded-full transition-colors">
+                            class="schematic-dot absolute top-1 right-1 w-1.5 h-1.5 bg-slate-500 rounded-full transition-colors">
                         </div>
                         <div
-                            class="schematic-dot absolute bottom-1 left-1 w-1.5 h-1.5 bg-slate-600 rounded-full transition-colors">
+                            class="schematic-dot absolute bottom-1 left-1 w-1.5 h-1.5 bg-slate-500 rounded-full transition-colors">
                         </div>
                     </div>
 
-                    <h3 class="text-xl font-bold mb-3 text-emerald-100">AI Integration</h3>
+                    <h3 class="text-xl font-bold mb-3 text-sky-100">AI Integration</h3>
                     <p class="text-slate-400 leading-relaxed">
                         Building RAG (Retrieval-Augmented Generation) systems with Vector Databases.
                         Fine-tuning LLMs for specific domain tasks.
@@ -272,22 +277,22 @@
                 </div>
 
                 <!-- Card 3: Process Automation -->
-                <div class="group bg-slate-950 p-8 rounded-xl border border-slate-800 hover:border-emerald-500/30 transition-all fade-in-section"
+                <div class="group bg-slate-800 p-8 rounded-xl border border-slate-700 hover:border-sky-500/30 transition-all fade-in-section"
                     style="transition-delay: 200ms;">
                     <!-- CSS Icon: Terminal -->
                     <div class="w-12 h-12 mb-6">
                         <div
-                            class="schematic-border w-full h-full border-2 border-slate-600 rounded bg-slate-900 flex flex-col p-1 transition-colors">
-                            <div class="w-full h-1 bg-slate-800 mb-1 rounded-sm"></div>
+                            class="schematic-border w-full h-full border-2 border-slate-500 rounded bg-slate-900 flex flex-col p-1 transition-colors">
+                            <div class="w-full h-1 bg-slate-700 mb-1 rounded-sm"></div>
                             <div
-                                class="flex-1 font-mono text-[10px] text-slate-500 pl-1 pt-1 leading-none group-hover:text-emerald-400 transition-colors">
+                                class="flex-1 font-mono text-[10px] text-slate-500 pl-1 pt-1 leading-none group-hover:text-sky-400 transition-colors">
                                 >_ run<br>
                                 ...
                             </div>
                         </div>
                     </div>
 
-                    <h3 class="text-xl font-bold mb-3 text-emerald-100">Process Automation</h3>
+                    <h3 class="text-xl font-bold mb-3 text-sky-100">Process Automation</h3>
                     <p class="text-slate-400 leading-relaxed">
                         Replacing manual spreadsheet workflows with Python scripts and autonomous agents.
                         If you do it twice, I automate it.
@@ -302,10 +307,10 @@
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 fade-in-section">
                 <div>
-                    <h2 class="text-3xl font-bold mb-2">The Engine Room</h2>
+                    <h2 class="text-3xl font-bold mb-2 text-slate-100">The Engine Room</h2>
                     <p class="text-slate-400">Tools and technologies I use to bend data.</p>
                 </div>
-                <div class="font-mono text-xs text-emerald-500 mt-4 md:mt-0">
+                <div class="font-mono text-xs text-sky-500 mt-4 md:mt-0">
                     >> print(stack.current_status)
                 </div>
             </div>
@@ -315,85 +320,85 @@
 
                 <!-- Core Languages & DBs -->
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-python-plain text-xl"></i> <span>Python</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="fa-solid fa-database text-xl"></i> <span>SQL</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="fa-solid fa-robot text-xl"></i> <span>Ollama</span>
                 </div>
 
                 <!-- Infrastructure -->
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-docker-plain text-xl"></i> <span>Docker</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-kubernetes-plain text-xl"></i> <span>K8s</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-terraform-plain text-xl"></i> <span>Terraform</span>
                 </div>
 
                 <!-- Clouds -->
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-amazonwebservices-plain-wordmark text-xl"></i> <span>AWS</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-azure-plain text-xl"></i> <span>Azure</span>
                 </div>
 
                 <!-- Data Pipelines -->
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-apacheairflow-plain text-xl"></i> <span>Airflow</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-apachekafka-plain text-xl"></i> <span>Kafka</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-dbt-plain text-xl"></i> <span>DBT</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="fa-solid fa-snowflake text-xl"></i> <span>Snowflake</span>
                 </div>
 
                 <!-- AI & Automation -->
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-tensorflow-original text-xl"></i> <span>TensorFlow</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-pandas-plain text-xl"></i> <span>Pandas</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="fa-solid fa-link text-xl"></i> <span>LangChain</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="fa-solid fa-share-nodes text-xl"></i> <span>Pinecone</span>
                 </div>
 
                 <!-- Tools -->
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="devicon-git-plain text-xl"></i> <span>Git</span>
                 </div>
                 <div
-                    class="tech-pill bg-slate-900 border border-slate-800 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
+                    class="tech-pill bg-slate-800 border border-slate-700 p-4 rounded text-slate-300 transition-all cursor-default flex items-center justify-center gap-2">
                     <i class="fa-solid fa-diagram-project text-xl"></i> <span>n8n</span>
                 </div>
 
@@ -402,29 +407,28 @@
     </section>
 
     <!-- Latest from the Blog -->
-    <section id="blog" class="py-24 bg-slate-900 border-y border-slate-800">
+    <section id="blog" class="py-24 bg-slate-900 border-y border-slate-700">
         <div class="container mx-auto px-6">
             <div class="flex justify-between items-center mb-16 fade-in-section">
                 <div>
-                    <h2 class="text-3xl font-bold mb-2">Engineering Logs</h2>
+                    <h2 class="text-3xl font-bold mb-2 text-slate-100">Engineering Logs</h2>
                     <p class="text-slate-400">Deep dives into architecture, code, and system design.</p>
                 </div>
-                <a href="#" class="hidden md:block text-emerald-400 hover:text-emerald-300 font-medium">View Archive
-                    &rarr;</a>
+                <a href="#" class="hidden md:block text-sky-400 hover:text-sky-300 font-medium">View Archive &rarr;</a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Blog Post 1 -->
                 <article
-                    class="blog-card bg-slate-950 rounded-xl overflow-hidden border border-slate-800 transition-transform fade-in-section">
-                    <div class="h-2 bg-gradient-to-r from-emerald-500 to-cyan-500"></div>
+                    class="blog-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition-transform fade-in-section">
+                    <div class="h-2 bg-gradient-to-r from-sky-500 to-indigo-500"></div>
                     <div class="p-6">
                         <div class="flex gap-2 mb-4">
-                            <span class="text-xs font-mono bg-slate-900 text-emerald-400 px-2 py-1 rounded">RAG</span>
+                            <span class="text-xs font-mono bg-slate-900 text-sky-400 px-2 py-1 rounded">RAG</span>
                             <span class="text-xs font-mono bg-slate-900 text-slate-400 px-2 py-1 rounded">Vector
                                 DB</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-3 hover:text-emerald-400 transition-colors">
+                        <h3 class="text-xl font-bold mb-3 hover:text-sky-400 transition-colors text-slate-100">
                             <a href="#">Optimizing Context Windows for Financial Report Analysis</a>
                         </h3>
                         <p class="text-slate-400 text-sm mb-6 line-clamp-3">
@@ -440,16 +444,16 @@
 
                 <!-- Blog Post 2 -->
                 <article
-                    class="blog-card bg-slate-950 rounded-xl overflow-hidden border border-slate-800 transition-transform fade-in-section"
+                    class="blog-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition-transform fade-in-section"
                     style="transition-delay: 100ms;">
-                    <div class="h-2 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+                    <div class="h-2 bg-gradient-to-r from-cyan-500 to-sky-500"></div>
                     <div class="p-6">
                         <div class="flex gap-2 mb-4">
                             <span class="text-xs font-mono bg-slate-900 text-cyan-400 px-2 py-1 rounded">Airflow</span>
                             <span
                                 class="text-xs font-mono bg-slate-900 text-slate-400 px-2 py-1 rounded">Automation</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-3 hover:text-emerald-400 transition-colors">
+                        <h3 class="text-xl font-bold mb-3 hover:text-sky-400 transition-colors text-slate-100">
                             <a href="#">The Death of the Daily Spreadsheet</a>
                         </h3>
                         <p class="text-slate-400 text-sm mb-6 line-clamp-3">
@@ -465,17 +469,17 @@
 
                 <!-- Blog Post 3 -->
                 <article
-                    class="blog-card bg-slate-950 rounded-xl overflow-hidden border border-slate-800 transition-transform fade-in-section"
+                    class="blog-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition-transform fade-in-section"
                     style="transition-delay: 200ms;">
-                    <div class="h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                    <div class="h-2 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
                     <div class="p-6">
                         <div class="flex gap-2 mb-4">
                             <span
-                                class="text-xs font-mono bg-slate-900 text-purple-400 px-2 py-1 rounded">Architecture</span>
+                                class="text-xs font-mono bg-slate-900 text-indigo-400 px-2 py-1 rounded">Architecture</span>
                             <span class="text-xs font-mono bg-slate-900 text-slate-400 px-2 py-1 rounded">Data
                                 Mesh</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-3 hover:text-emerald-400 transition-colors">
+                        <h3 class="text-xl font-bold mb-3 hover:text-sky-400 transition-colors text-slate-100">
                             <a href="#">Decentralizing Data Ownership</a>
                         </h3>
                         <p class="text-slate-400 text-sm mb-6 line-clamp-3">
@@ -501,20 +505,20 @@
     <!-- Footer / CTA -->
     <section id="contact" class="py-24 text-center">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-6">Ready to Automate?</h2>
+            <h2 class="text-3xl font-bold mb-6 text-slate-100">Ready to Automate?</h2>
             <p class="text-slate-400 mb-8 max-w-xl mx-auto">
                 Whether you need a custom RAG pipeline or a complete data infrastructure overhaul,
                 let's build systems that scale.
             </p>
             <div class="flex justify-center gap-6 mb-12">
                 <a href="mailto:mdyzma@gmail.com"
-                    class="font-mono text-emerald-400 hover:text-emerald-300 border-b border-emerald-400 border-dashed pb-1">mdyzma@gmail.com</a>
+                    class="font-mono text-sky-400 hover:text-sky-300 border-b border-sky-400 border-dashed pb-1 font-semibold">mdyzma@gmail.com</a>
             </div>
 
             <div
-                class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
+                class="border-t border-slate-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
                 <div class="font-mono mb-4 md:mb-0">
-                    &copy; 2025 Data Architect. Hosted on Cloudflare Pages.
+                    &copy; 2026 Michal Dyzma. Hosted on Cloudflare Pages.
                 </div>
                 <div class="flex space-x-6">
                     <a href="https://github.com/mdyzma" target="_blank" rel="noopener noreferrer"
