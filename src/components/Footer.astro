@@ -1,0 +1,59 @@
+---
+import ContactForm from "./ContactForm";
+import { Send, Mail, BookOpen } from "@lucide/astro";
+import BrandIcon from "./BrandIcon.astro";
+---
+<!-- Footer / CTA -->
+        <section id="contact" class="py-24 text-center">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold mb-6 text-slate-100">
+                    Ready to Automate?
+                </h2>
+                <p class="text-slate-400 mb-8 max-w-xl mx-auto">
+                    Whether you need a custom RAG pipeline or a complete data
+                    infrastructure overhaul, let's build systems that scale.
+                </p>
+                <ContactForm client:load><Send slot="sendIcon" size={18} aria-hidden="true" /></ContactForm>
+                <noscript><p class="mb-6 text-slate-300">To get in touch, use the email link below.</p></noscript>
+                <div class="flex justify-center gap-6 mb-12 mt-8">
+                    <a
+                        href="mailto:mdyzma@gmail.com"
+                        class="font-mono text-sky-400 hover:text-sky-300 border-b border-sky-400 border-dashed pb-1 font-semibold"
+                        ><Mail size={18} class="inline mr-2" aria-hidden="true" />mdyzma@gmail.com</a
+                    >
+                </div>
+
+                <div
+                    class="border-t border-slate-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500"
+                >
+                    <div class="font-mono mb-4 md:mb-0">
+                        &copy; {new Date().getFullYear()} Michal Dyzma.
+                    </div>
+                    <div class="flex space-x-6">
+                        <a
+                            href="https://github.com/mdyzma"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:text-white transition-colors"
+                            ><BrandIcon service="github" class="inline mr-1" />GitHub</a
+                        >
+                        <a
+                            href="https://pl.linkedin.com/in/michal-dyzma-4341928a"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:text-white transition-colors"
+                            ><BrandIcon service="linkedin" class="inline mr-1" />LinkedIn</a
+                        >
+                        <a
+                            href="https://blog.midysmart.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:text-white transition-colors"
+                            ><BookOpen size={16} class="inline mr-1" aria-hidden="true" />Blog</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        

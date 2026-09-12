@@ -1,0 +1,16 @@
+---
+import { Database, Network, Terminal } from '@lucide/astro';
+const competencies = [
+  { title: 'Data Engineering', icon: Database, description: 'Designing robust ELT/ETL architectures using Airflow, DBT, and Spark. Ensuring data quality and lineage for downstream AI consumption.' },
+  { title: 'AI Integration', icon: Network, description: 'Building RAG (Retrieval-Augmented Generation) systems with Vector Databases. Fine-tuning LLMs for specific domain tasks.' },
+  { title: 'Process Automation', icon: Terminal, description: 'Replacing manual spreadsheet workflows with Python scripts and autonomous agents. If you do it twice, I automate it.' },
+];
+---
+<section id="about" class="border-t border-slate-700 bg-slate-800/50 py-24">
+  <div class="container mx-auto px-6">
+    <div class="fade-in-section mb-16"><h2 class="mb-4 text-3xl font-bold text-slate-100">Core Competencies</h2><div class="h-1 w-20 bg-primary"></div></div>
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      {competencies.map(({ title, icon: Icon, description }) => <div class="fade-in-section glass-panel p-8 transition-colors hover:border-primary/40"><Icon size={44} stroke-width={1.5} class="mb-6 text-primary" aria-hidden="true" /><h3 class="mb-3 text-xl font-bold text-sky-100">{title}</h3><p class="leading-relaxed text-slate-400">{description}</p></div>)}
+    </div>
+  </div>
+</section>

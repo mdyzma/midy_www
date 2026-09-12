@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import { ArrowRight, Search, BookOpen } from '@lucide/astro';
+interface Props { filters?: boolean }
+const { filters = true } = Astro.props;
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const categories = ['All posts', ...new Set(posts.map(post => post.data.category))];
+---
+<blog-explorer class="block">
+  {filters && <div data-filters hidden class="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+    <div class="flex flex-wrap gap-2" role="group" aria-label="Filter logs by category">
+      {categories.map(item => <button type="button" data-category={item} aria-pressed={item === 'All posts'} class="rounded-full border border-slate-600 px-4 py-2 text-sm text-slate-300 hover:border-primary aria-pressed:border-primary aria-pressed:bg-primary/10 aria-pressed:text-primary">{item}</button>)}
+    </div>
+    <label class="flex flex-col gap-2 text-sm text-slate-300"><span class="flex items-center gap-2"><Search size={16} aria-hidden="true" />Search logs</span>
+      <input type="search" placeholder="Title, topic, or technology…" class="w-full rounded-lg border border-slate-600 bg-slate-800 px-4 py-3 md:w-80" />
+    </label>
+  </div>}
+  {filters && <p class="mb-4 text-sm text-slate-400" role="status">{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>}
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    {posts.map(({ data }) => <article data-category={data.category} data-search={`${data.title} ${data.description} ${data.tags.join(' ')}`.toLowerCase()} class="blog-card overflow-hidden rounded-xl border border-slate-700 bg-slate-800 transition-all">
+      <div class="h-1.5 bg-gradient-to-r from-primary to-indigo-500" />
+      <div class="p-6">
+        <BookOpen size={22} class="mb-4 text-primary" aria-hidden="true" />
+        <div class="mb-5 flex flex-wrap gap-2">{data.tags.map(tag => <span class="rounded bg-slate-900 px-2 py-1 font-mono text-xs text-primary">{tag}</span>)}</div>
+        <h3 class="mb-3 text-xl font-bold leading-snug text-slate-100"><a href={`/blog/posts/${data.slug}`} class="hover:text-primary">{data.title}</a></h3>
+        <p class="mb-6 text-sm leading-relaxed text-slate-400">{data.description}</p>
+        <a href={`/blog/posts/${data.slug}`} class="inline-flex items-center gap-2 text-sm font-semibold text-primary">Read article <ArrowRight size={16} aria-hidden="true" /><span class="sr-only">: {data.title}</span></a>
+      </div>
+    </article>)}
+  </div>
+  {filters && <div data-empty hidden class="rounded-xl border border-slate-700 p-10 text-center"><p class="mb-4 text-slate-300">No articles match your search.</p><button type="button" data-clear class="text-primary underline">Clear filters</button></div>}
+</blog-explorer>
+<script>
+  class BlogExplorer extends HTMLElement {
+    connectedCallback() {
+      const filters = this.querySelector<HTMLElement>('[data-filters]');
+      if (!filters) return;
+      filters.hidden = false;
+      const search = this.querySelector('input')!;
+      const buttons = this.querySelectorAll<HTMLButtonElement>('button[data-category]');
+      const cards = this.querySelectorAll<HTMLElement>('article');
+      const empty = this.querySelector<HTMLElement>('[data-empty]')!;
+      let category = 'All posts';
+      const update = () => {
+        let count = 0;
+        cards.forEach(card => {
+          card.hidden = !(category === 'All posts' || card.dataset.category === category) || !card.dataset.search!.includes(search.value.trim().toLowerCase());
+          if (!card.hidden) count++;
+        });
+        this.querySelector('[role="status"]')!.textContent = `${count} ${count === 1 ? 'article' : 'articles'}`;
+        empty.hidden = count !== 0;
+        buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.category === category)));
+      };
+      search.oninput = update;
+      buttons.forEach(button => { button.onclick = () => { category = button.dataset.category!; update(); }; });
+      this.querySelector<HTMLButtonElement>('[data-clear]')!.onclick = () => { category = 'All posts'; search.value = ''; update(); search.focus(); };
+    }
+  }
+  if (!customElements.get('blog-explorer')) customElements.define('blog-explorer', BlogExplorer);
+</script>

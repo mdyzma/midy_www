@@ -1,0 +1,61 @@
+---
+import Typewriter from "./Typewriter.astro";
+---
+<!-- Hero Section -->
+        <section
+            class="min-h-screen flex flex-col justify-center relative pt-20"
+        >
+            <!-- Background Grid Decoration (Subtle Blue Grid) -->
+            <div
+                class="absolute inset-0 z-0 opacity-20 pointer-events-none"
+                style="
+                    background-image: radial-gradient(
+                        #64748b 1px,
+                        transparent 1px
+                    );
+                    background-size: 30px 30px;
+                "
+            ></div>
+
+            <div class="hero-intro container mx-auto px-6 z-10">
+                <div class="max-w-4xl">
+                    <p class="font-mono text-sky-400 mb-4 text-sm">
+                        // INITIALIZING PIPELINES...
+                    </p>
+                    <h1
+                        class="text-5xl md:text-7xl font-bold leading-tight mb-6 text-slate-100"
+                    >
+                        Turning Raw Data into <br />
+                        <Typewriter />
+                    </h1>
+                    <p
+                        class="text-xl text-slate-400 max-w-2xl leading-relaxed mb-10"
+                    >
+                        I build the engines that power modern AI. Specializing in high-throughput <strong class="text-slate-200">ETL pipelines</strong>, <strong class="text-slate-200">Vector RAG systems</strong>, and <strong class="text-slate-200">Autonomous Agent workflows</strong>.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a
+                            href="#stack"
+                            class="px-8 py-4 bg-sky-600 text-white font-bold rounded hover:bg-sky-500 transition-colors shadow-lg shadow-sky-900/50"
+                        >
+                            View Tech Stack
+                        </a>
+                        <a
+                            href="/blog/"
+                            class="px-8 py-4 bg-slate-800 text-slate-200 font-bold rounded border border-slate-600 hover:border-sky-500/50 hover:text-sky-400 transition-colors"
+                        >
+                            Latest Research
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div
+                class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-slate-500"
+            >
+                &#8595;
+            </div>
+        </section>
+
+        

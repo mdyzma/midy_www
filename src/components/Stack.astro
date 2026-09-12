@@ -1,0 +1,16 @@
+---
+import { stack } from '../data/stack';
+import { Code, Database, Bot, Container, Cloud, Workflow, Brain, GitBranch, Network, Layers } from '@lucide/astro';
+const icons = [Code, Database, Bot, Container, Network, Layers, Cloud, Cloud, Workflow, Workflow, Database, Database, Brain, Code, Network, Database, GitBranch, Workflow];
+---
+<section id="stack" class="py-24">
+  <div class="container mx-auto px-6">
+    <div class="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      <div><h2 class="mb-2 text-3xl font-bold text-slate-100">The Engine Room</h2><p class="text-slate-400">Tools and technologies I use to bend data.</p></div>
+      <p class="font-mono text-xs text-sky-500">&gt;&gt; print(stack.current_status)</p>
+    </div>
+    <ul class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+      {stack.map((name, index) => { const Icon = icons[index] ?? Code; return <li class="tech-pill flex items-center justify-center gap-2 rounded border border-slate-700 bg-slate-800 p-4 text-slate-300 transition-all"><Icon size={20} aria-hidden="true" /><span>{name}</span></li>; })}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+<span class="sr-only">Actionable Insights</span>
+<hero-typewriter aria-hidden="true" class="inline-block min-h-[2.4em] text-primary sm:min-h-[1.2em]"><span data-text>Actionable Insights</span><span class="cursor-blink">_</span></hero-typewriter>
+<script>
+  class HeroTypewriter extends HTMLElement {
+    private timer?: ReturnType<typeof setTimeout>;
+    private cleanup?: () => void;
+    connectedCallback() {
+      const phrases = ['Actionable Insights', 'Automated Workflows', 'Business Value', 'Scalable Systems'];
+      const text = this.querySelector('[data-text]')!;
+      const motion = matchMedia('(prefers-reduced-motion: reduce)');
+      let index = 0, length = phrases[0].length, deleting = true;
+      const tick = () => {
+        length += deleting ? -1 : 1;
+        text.textContent = phrases[index].slice(0, length);
+        let delay = deleting ? 45 : 90;
+        if (length === 0) { deleting = false; index = (index + 1) % phrases.length; delay = 350; }
+        if (length === phrases[index].length) { deleting = true; delay = 2200; }
+        this.timer = setTimeout(tick, delay);
+      };
+      const start = () => {
+        clearTimeout(this.timer);
+        text.textContent = phrases[0]; index = 0; length = phrases[0].length; deleting = true;
+        if (!motion.matches) this.timer = setTimeout(tick, 2200);
+      };
+      motion.addEventListener('change', start);
+      this.cleanup = () => motion.removeEventListener('change', start);
+      start();
+    }
+    disconnectedCallback() { clearTimeout(this.timer); this.cleanup?.(); }
+  }
+  if (!customElements.get('hero-typewriter')) customElements.define('hero-typewriter', HeroTypewriter);
+</script>

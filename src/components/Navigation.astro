@@ -1,0 +1,37 @@
+---
+import { Menu } from '@lucide/astro';
+interface Props { pathname: string }
+const { pathname } = Astro.props;
+const links = [['/#about', 'Philosophy'], ['/#stack', 'Stack'], ['/blog/', 'Engineering Logs'], ['/#contact', 'Connect']];
+---
+<site-navigation class="block">
+  <header class="site-header fixed inset-x-0 top-0 z-50 border-b border-slate-700">
+    <div class="container mx-auto flex flex-wrap items-center justify-between gap-4 px-6 py-4">
+      <a href="/" class="font-mono text-lg font-bold tracking-tighter text-primary" aria-label="Michal Dyzma home">&lt;Michal_Dyzma /&gt;</a>
+      <button hidden type="button" class="rounded border border-slate-600 px-3 py-2 text-sm md:hidden" aria-expanded="false" aria-controls="site-navigation"><Menu size={16} class="inline" aria-hidden="true" /> <span>Menu</span></button>
+      <nav id="site-navigation" aria-label="Main navigation" class="flex w-full flex-col gap-5 pb-2 text-sm font-medium text-slate-300 md:w-auto md:flex-row md:gap-8 md:pb-0">
+        {links.map(([href, label]) => <a href={href} aria-current={href === '/blog/' && pathname.startsWith('/blog/') ? 'page' : undefined} class="py-1 transition-colors hover:text-primary aria-[current=page]:text-primary">{label}</a>)}
+      </nav>
+    </div>
+  </header>
+</site-navigation>
+<script>
+  class SiteNavigation extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector('button')!;
+      const nav = this.querySelector('nav')!;
+      const label = button.querySelector('span')!;
+      const setOpen = (open: boolean) => {
+        button.setAttribute('aria-expanded', String(open));
+        label.textContent = open ? 'Close' : 'Menu';
+        nav.classList.toggle('max-md:hidden', !open);
+      };
+      button.hidden = false;
+      setOpen(false);
+      button.onclick = () => setOpen(button.getAttribute('aria-expanded') !== 'true');
+      nav.onclick = event => { if ((event.target as Element).closest('a')) setOpen(false); };
+      this.onkeydown = event => { if (event.key === 'Escape') { setOpen(false); button.focus(); } };
+    }
+  }
+  if (!customElements.get('site-navigation')) customElements.define('site-navigation', SiteNavigation);
+</script>

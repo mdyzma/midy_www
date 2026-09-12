@@ -1,0 +1,4 @@
+# Copy to .dev.vars. Use a verified Resend sender domain.
+RESEND_API_KEY="re_replace_me"
+CONTACT_FROM="Website <contact@your-verified-domain.com>"
+CONTACT_TO="mdyzma@gmail.com"

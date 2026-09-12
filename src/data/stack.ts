@@ -1,0 +1,20 @@
+export const stack = [
+  "Python",
+  "SQL",
+  "Ollama",
+  "Docker",
+  "K8s",
+  "Terraform",
+  "AWS",
+  "Azure",
+  "Airflow",
+  "Kafka",
+  "DBT",
+  "Snowflake",
+  "TensorFlow",
+  "Pandas",
+  "LangChain",
+  "Pinecone",
+  "Git",
+  "n8n"
+];

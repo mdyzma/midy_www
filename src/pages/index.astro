@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Stack from '../components/Stack.astro';
+import BlogExplorer from '../components/BlogExplorer.astro';
+---
+<Layout title="Michal Dyzma | Data & AI Automation" description="Michal Dyzma — data engineering, AI integration, and process automation. ETL pipelines, vector RAG systems, and autonomous agent workflows.">
+  <Hero />
+  <About />
+  <Stack />
+  <section id="blog" class="border-y border-slate-700 py-24">
+    <div class="container mx-auto px-6">
+      <div class="mb-12 flex flex-wrap items-center justify-between gap-6">
+        <div><h2 class="mb-2 text-3xl font-bold">Engineering Logs</h2><p class="text-slate-400">Notes on architecture, code, and developer workflows.</p></div>
+        <a href="/blog/" class="font-medium text-sky-400">View archive →</a>
+      </div>
+      <BlogExplorer filters={false} />
+    </div>
+  </section>
+</Layout>
