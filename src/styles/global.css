@@ -39,7 +39,11 @@ button:disabled { cursor: wait; opacity: .65; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
-.contact-form { max-width: 44rem; margin: 2rem auto; padding: 2rem; text-align: left; }
+.contact-layout { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; align-items: start; gap: 2rem; max-width: 66rem; margin: 2rem auto; }
+.contact-form { width: 100%; margin: 0; padding: 2rem; text-align: left; }
+.contact-qr { padding: 1.5rem; }
+.contact-qr img { display: block; width: 100%; max-width: 18rem; height: auto; margin: 1.25rem auto; background: white; }
+@media (max-width: 900px) { .contact-layout { grid-template-columns: minmax(0, 1fr); max-width: 44rem; } .contact-qr { width: 100%; max-width: 24rem; justify-self: center; } }
 .contact-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .contact-form label { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.25rem; font-size: .9rem; }
 .contact-form input, .contact-form textarea { width: 100%; min-width: 0; border: 1px solid var(--border); border-radius: .5rem; background: var(--bg-main); color: var(--text-main); padding: .8rem 1rem; }

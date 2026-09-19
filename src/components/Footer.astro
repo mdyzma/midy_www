@@ -13,7 +13,16 @@ import BrandIcon from "./BrandIcon.astro";
                     Whether you need a custom RAG pipeline or a complete data
                     infrastructure overhaul, let's build systems that scale.
                 </p>
-                <ContactForm client:load><Send slot="sendIcon" size={18} aria-hidden="true" /></ContactForm>
+                <div class="contact-layout">
+                    <div class="min-w-0">
+                        <ContactForm client:load><Send slot="sendIcon" size={18} aria-hidden="true" /></ContactForm>
+                    </div>
+                    <aside class="contact-qr glass-panel" aria-labelledby="save-contact-heading">
+                        <h3 id="save-contact-heading" class="text-xl font-bold text-slate-100">Save my contact</h3>
+                        <img src="/contact-info-qr.png" alt="QR code for Michal Dyzma’s contact details" width="1024" height="1024" loading="lazy" decoding="async" />
+                        <p class="text-sm leading-relaxed text-slate-300">Scan with your phone’s camera to add me to your contacts.</p>
+                    </aside>
+                </div>
                 <noscript><p class="mb-6 text-slate-300">To get in touch, use the email link below.</p></noscript>
                 <div class="flex justify-center gap-6 mb-12 mt-8">
                     <a
