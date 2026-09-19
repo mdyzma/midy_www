@@ -1,41 +1,31 @@
 import { expect, test } from '@playwright/test';
 
-test('SPA navigation, search, charts and history', async ({ page }) => {
+test('Homelab navigation, direct loading and removed blog routes', async ({ page, request, isMobile }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Turning Raw Data');
   await page.waitForFunction(() => document.querySelector('astro-island:not([ssr])'));
   await page.evaluate(() => { (window as Window & { spaMarker?: string }).spaMarker = 'alive'; });
-  await page.getByRole('link', { name: 'View archive' }).click();
-  await expect(page).toHaveURL('/blog/');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Engineering Logs');
+  await expect(page.locator('a[href*="blog"]')).toHaveCount(0);
+  await page.getByRole('link', { name: 'Explore the homelab', exact: true }).click();
+  await expect(page).toHaveURL('/homelab/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Homelab');
+  if (isMobile) await page.getByRole('button', { name: 'Menu', exact: true }).click();
+  await expect(page.getByRole('navigation').getByRole('link', { name: 'Homelab' })).toHaveAttribute('aria-current', 'page');
+  if (isMobile) await page.getByRole('button', { name: 'Close', exact: true }).click();
+  await expect(page.getByRole('link', { name: 'View project on GitHub' })).toHaveAttribute('href', 'https://github.com/mdyzma/homelab');
   expect(await page.evaluate(() => (window as Window & { spaMarker?: string }).spaMarker)).toBe('alive');
-  const search = page.getByRole('searchbox', { name: 'Search logs' });
-  await search.fill('no matching article');
-  await expect(page.getByText('No articles match your search.')).toBeVisible();
-  await page.getByRole('button', { name: 'Clear filters' }).click();
-  await page.getByRole('button', { name: 'Automation', exact: true }).click();
-  await expect(page.locator('blog-explorer').getByRole('status')).toHaveText('1 article');
-  await search.fill('dotfiles');
-  await page.getByRole('link', { name: 'The Modern Developer Setup: Mac, Windows, Ubuntu', exact: true }).click();
-  await expect(page).toHaveURL(/\/blog\/posts\/dotfiles_automate.html\/?$/);
-  await expect(page.locator('canvas')).toHaveCount(3);
-  await expect.poll(() => page.locator('canvas').evaluateAll(items => items.every(item => Number(item.getAttribute('width')) > 0 && item.getAttribute('style')?.includes('display: block')))).toBe(true);
-  await page.evaluate(() => Promise.all(document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {}))));
-  await page.getByRole('link', { name: 'All engineering logs' }).click();
-  await expect(page).toHaveURL('/blog/');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Engineering Logs');
-  await page.evaluate(() => Promise.all(document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {}))));
   await page.goBack();
-  await expect(page).toHaveURL(/\/blog\/posts\/dotfiles_automate.html\/?$/);
-  await expect(page.locator('canvas')).toHaveCount(3);
-  await expect.poll(() => page.locator('canvas').first().getAttribute('style')).toContain('display: block');
-  await page.evaluate(() => Promise.all(document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {}))));
+  await expect(page).toHaveURL('/');
+  await page.goForward();
+  await expect(page).toHaveURL('/homelab/');
   await page.reload();
-  await expect(page.locator('canvas').first()).toBeVisible();
-  expect(errors).toEqual([]);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Homelab');
+  expect((await request.get('/blog/')).status()).toBe(404);
+  expect((await request.get('/blog/posts/dotfiles_automate.html')).status()).toBe(404);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+  expect(errors).toEqual([]);
 });
 
 test('mobile navigation and reduced motion', async ({ page, isMobile }) => {
@@ -57,8 +47,8 @@ test('static content works without JavaScript', async ({ browser }) => {
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4321/');
   await expect(page.getByRole('heading', { name: 'Core Competencies' })).toBeVisible();
-  await page.goto('http://127.0.0.1:4321/blog/');
-  await expect(page.getByRole('link', { name: 'The Modern Developer Setup: Mac, Windows, Ubuntu', exact: true })).toBeVisible();
+  await page.goto('http://127.0.0.1:4321/homelab/');
+  await expect(page.getByRole('heading', { name: 'Homelab', exact: true })).toBeVisible();
   await context.close();
 });
 

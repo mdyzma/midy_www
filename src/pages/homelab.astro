@@ -1,0 +1,48 @@
+---
+import { getEntry, render } from 'astro:content';
+import { Server, ArrowUpRight, Bot, MessageSquare, Cpu } from '@lucide/astro';
+import Layout from '../layouts/Layout.astro';
+import { containerGroups } from '../data/homelab';
+const project = await getEntry('projects', 'homelab');
+if (!project) throw new Error('Homelab project content is missing.');
+const { Content } = await render(project);
+---
+<Layout title="Homelab | Michal Dyzma" description={project.data.description}>
+  <section class="container mx-auto px-6 pt-36 pb-20">
+    <div class="max-w-3xl">
+      <p class="mb-4 font-mono text-sm text-primary">// INFRASTRUCTURE AS CODE</p>
+      <h1 class="mb-6 flex items-center gap-4 text-4xl font-bold md:text-5xl"><Server size={40} class="text-primary" aria-hidden="true" />Homelab</h1>
+      <p class="mb-8 text-xl leading-relaxed text-slate-300">{project.data.description}</p>
+      <ul class="mb-8 flex flex-wrap gap-3" aria-label="Project technologies">
+        {project.data.tags.map(tag => <li class="rounded border border-slate-700 bg-slate-800 px-3 py-2 font-mono text-sm text-primary">{tag}</li>)}
+      </ul>
+      <div class="glass-panel space-y-5 p-6 leading-relaxed text-slate-300 md:p-8"><Content /></div>
+      <a href={project.data.repository} target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 rounded bg-primary px-6 py-3 font-bold text-slate-900">View project on GitHub <ArrowUpRight size={18} aria-hidden="true" /></a>
+    </div>
+    <section class="mt-16" aria-labelledby="local-ai-heading">
+      <h2 id="local-ai-heading" class="mb-4 text-3xl font-bold">Local AI, on my own hardware</h2>
+      <p class="mb-8 max-w-3xl leading-relaxed text-slate-400">Ollama and Open WebUI sit at the heart of the local AI stack, with an NVIDIA GeForce RTX 2070 in the host for GPU workloads.</p>
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="glass-panel p-6"><Bot size={28} class="mb-4 text-primary" aria-hidden="true" /><h3 class="mb-2 text-xl font-bold">Ollama</h3><p class="leading-relaxed text-slate-300">Local language model runtime, hosted in its own container.</p><p class="mt-4 font-mono text-xs text-primary">CONTAINER 114</p></div>
+        <div class="glass-panel p-6"><MessageSquare size={28} class="mb-4 text-primary" aria-hidden="true" /><h3 class="mb-2 text-xl font-bold">Open WebUI</h3><p class="leading-relaxed text-slate-300">A browser-based interface for interacting with local AI models.</p><p class="mt-4 font-mono text-xs text-primary">CONTAINER 113</p></div>
+        <div class="glass-panel p-6"><Cpu size={28} class="mb-4 text-primary" aria-hidden="true" /><h3 class="mb-2 text-xl font-bold">NVIDIA RTX 2070</h3><p class="leading-relaxed text-slate-300">Dedicated graphics hardware in an ASUS host with an Intel Core i5-4670 and 32 GB of RAM.</p><p class="mt-4 font-mono text-xs text-primary">LOCAL GPU HARDWARE</p></div>
+      </div>
+    </section>
+    <figure class="mt-12">
+      <a href="/proxmox-screen.png" target="_blank" rel="noopener noreferrer" aria-label="Open the full-size Proxmox screenshot" class="block overflow-hidden rounded-xl border border-slate-700 hover:border-primary">
+        <img src="/proxmox-screen.png" alt="Proxmox dashboard showing the full console output, 15 running containers including Ollama and Open WebUI, and host hardware identifying an NVIDIA GeForce RTX 2070." width="1882" height="1902" loading="lazy" decoding="async" class="h-auto w-full" />
+      </a>
+      <figcaption class="mt-3 text-sm leading-relaxed text-slate-400">Inside the homelab: the Proxmox host and its container inventory. All 15 containers were running when this screenshot was captured. Select the image to view it full size.</figcaption>
+    </figure>
+    <section class="mt-12" aria-labelledby="containers-heading">
+      <h2 id="containers-heading" class="mb-3 text-3xl font-bold">15 containers, one homelab</h2>
+      <p class="mb-8 text-slate-400">Services shown in the screenshot, grouped by purpose.</p>
+      <div class="grid gap-6 sm:grid-cols-2">
+        {containerGroups.map(group => <section class="glass-panel p-6">
+          <h3 class="mb-5 text-lg font-bold text-primary">{group.title}</h3>
+          <ul class="space-y-3">{group.containers.map(container => <li class="flex items-center justify-between gap-4"><span>{container.name}</span><span class="font-mono text-xs text-slate-400">CT {container.id}</span></li>)}</ul>
+        </section>)}
+      </div>
+    </section>
+  </section>
+</Layout>

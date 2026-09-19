@@ -30,7 +30,7 @@ button:disabled { cursor: wait; opacity: .65; }
 .skip-link:focus { top: 1rem; }
 .site-header { background: color-mix(in srgb, var(--bg-main) 94%, transparent); backdrop-filter: blur(16px); }
 .glass-panel { background: color-mix(in srgb, var(--bg-panel) 75%, transparent); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 1rem; }
-.blog-card:hover, .tech-pill:hover { border-color: var(--primary); transform: translateY(-3px); }
+.tech-pill:hover { border-color: var(--primary); transform: translateY(-3px); }
 .tech-pill:hover { color: var(--primary); }
 .fade-in-section { animation: slideUp .6s ease-out both; }
 .hero-intro { animation: fadeIn .8s ease-out; }

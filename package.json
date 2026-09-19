@@ -26,7 +26,6 @@
     "@lucide/astro": "^1.45.0",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.2",
-    "chart.js": "^4.5.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tailwindcss": "^4.3.3"
