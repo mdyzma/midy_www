@@ -1,0 +1,102 @@
+---
+import data from '../../public/status.json';
+import { parseSnapshot, freshness, formatSnapshotTime, statuses } from '../lib/status';
+const snapshot = parseSnapshot(data);
+---
+<service-status class="status-panel glass-panel block" id="service-status">
+  <div class="status-heading">
+    <div><p class="mb-3 font-mono text-xs text-primary">// HOMELAB HEALTH</p><h2 class="text-3xl font-bold">Service status</h2></div>
+    <span class="status-schedule">Daily snapshot · target 23:00 Warsaw</span>
+  </div>
+  <p data-freshness class="status-notice">{freshness(snapshot)}</p>
+  <p data-demo-note class="mb-3 text-sm text-slate-300" hidden={!snapshot.demo}>Example statuses and response times only. The daily exporter is not configured yet.</p>
+  <p class="text-sm text-slate-400">Snapshot captured: <time data-updated datetime={snapshot.generatedAt}>{formatSnapshotTime(snapshot.generatedAt)}</time></p>
+  <p data-error hidden class="mt-3 text-sm text-amber-300" role="alert"></p>
+  <div class="status-counts" aria-label="Snapshot totals">
+    {statuses.map(status => <div><span data-count={status} class="block text-2xl font-bold">{snapshot.monitors.filter(row => row.status === status).length}</span><span class="capitalize text-sm text-slate-400">{status}</span></div>)}
+  </div>
+  <div data-controls hidden>
+    <div class="status-controls">
+      <label>Find a service<input data-search type="search" placeholder="Search by name…" /></label>
+      <label>Status<select data-status aria-label="Status"><option value="all">All statuses</option>{statuses.map(status => <option value={status}>{status[0].toUpperCase() + status.slice(1)}</option>)}</select></label>
+      <button data-reset type="button" class="status-reset">Reset filters</button>
+    </div>
+    <div class="my-5"><p class="mb-3 text-xs text-slate-400">Filter by tags · matches any selected tag</p><div data-tags class="flex flex-wrap gap-2" role="group" aria-label="Filter services by tag"></div></div>
+  </div>
+  <p data-results role="status" class="mb-3 text-sm text-slate-400">{snapshot.monitors.length} services</p>
+  <div class="status-table-scroll" tabindex="0" role="region" aria-label="Service status table">
+    <table class="status-table">
+      <caption class="sr-only">Service health at the time of the snapshot. Response times are not live measurements.</caption>
+      <thead><tr><th scope="col">Service</th><th scope="col">Status</th><th scope="col">Response</th><th scope="col">Tags</th></tr></thead>
+      <tbody>{snapshot.monitors.map(row => <tr><th scope="row">{row.name}</th><td><span class={`service-badge service-${row.status}`}>{row.status}</span></td><td>{row.responseMs === null ? '—' : `${row.responseMs} ms`}</td><td>{row.tags.join(' · ') || '—'}</td></tr>)}</tbody>
+    </table>
+  </div>
+  <p data-empty hidden class="py-8 text-center text-slate-400">No services match these filters. Try another tag or reset the filters.</p>
+  <noscript><p class="mt-4 text-sm text-slate-400">Showing the snapshot included with this site build. Enable JavaScript for filters and newer snapshots.</p></noscript>
+  <script is:inline type="application/json" data-initial set:html={JSON.stringify(snapshot).replace(/</g, '\\u003c')} />
+</service-status>
+<script>
+  import { parseSnapshot, freshness, formatSnapshotTime, statuses } from '../lib/status';
+  import type { Snapshot } from '../lib/status';
+  class ServiceStatus extends HTMLElement {
+    private cleanup?: () => void;
+    connectedCallback() {
+      this.cleanup?.();
+      let snapshot: Snapshot = parseSnapshot(JSON.parse(this.querySelector('[data-initial]')!.textContent!));
+      const selected = new Set<string>();
+      const search = this.querySelector<HTMLInputElement>('[data-search]')!;
+      const status = this.querySelector<HTMLSelectElement>('[data-status]')!;
+      const tags = this.querySelector<HTMLElement>('[data-tags]')!;
+      const controller = new AbortController();
+      const render = () => {
+        const rows = snapshot.monitors.filter(row => row.name.toLowerCase().includes(search.value.trim().toLowerCase()) && (status.value === 'all' || row.status === status.value) && (!selected.size || row.tags.some(tag => selected.has(tag))));
+        this.querySelector('[data-freshness]')!.textContent = freshness(snapshot);
+        this.querySelector<HTMLElement>('[data-demo-note]')!.hidden = !snapshot.demo;
+        const time = this.querySelector<HTMLTimeElement>('[data-updated]')!;
+        time.dateTime = snapshot.generatedAt; time.textContent = formatSnapshotTime(snapshot.generatedAt);
+        statuses.forEach(value => { this.querySelector(`[data-count="${value}"]`)!.textContent = String(snapshot.monitors.filter(row => row.status === value).length); });
+        const tagList = [...new Set(snapshot.monitors.flatMap(row => row.tags))].sort();
+        const existingTags = [...tags.querySelectorAll('button')].map(button => button.textContent);
+        if (JSON.stringify(existingTags) !== JSON.stringify(tagList)) {
+          tags.replaceChildren(...tagList.map(tag => {
+            const button = document.createElement('button'); button.type = 'button'; button.textContent = tag; button.className = 'status-tag';
+            button.onclick = () => { if (selected.has(tag)) selected.delete(tag); else selected.add(tag); render(); };
+            return button;
+          }));
+        }
+        tags.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(selected.has(button.textContent!))));
+        const tbody = this.querySelector('tbody')!;
+        tbody.replaceChildren(...rows.map(row => {
+          const tr = document.createElement('tr');
+          const name = document.createElement('th'); name.scope = 'row'; name.textContent = row.name; tr.append(name);
+          const state = document.createElement('td'); const badge = document.createElement('span'); badge.className = `service-badge service-${row.status}`; badge.textContent = row.status; state.append(badge); tr.append(state);
+          for (const value of [row.responseMs === null ? '—' : `${row.responseMs} ms`, row.tags.join(' · ') || '—']) { const td = document.createElement('td'); td.textContent = value; tr.append(td); }
+          return tr;
+        }));
+        this.querySelector('[data-results]')!.textContent = `${rows.length} of ${snapshot.monitors.length} services`;
+        this.querySelector<HTMLElement>('[data-empty]')!.hidden = rows.length !== 0;
+      };
+      this.querySelector<HTMLElement>('[data-controls]')!.hidden = false;
+      search.oninput = render; status.onchange = render;
+      this.querySelector<HTMLButtonElement>('[data-reset]')!.onclick = () => { selected.clear(); search.value = ''; status.value = 'all'; render(); };
+      render();
+      const timer = setInterval(() => { this.querySelector('[data-freshness]')!.textContent = freshness(snapshot); }, 60_000);
+      const timeout = setTimeout(() => controller.abort(), 10_000);
+      this.cleanup = () => { controller.abort(); clearInterval(timer); clearTimeout(timeout); };
+      fetch('/status.json', { cache: 'no-store', signal: controller.signal }).then(async response => {
+        if (!response.ok) throw new Error('Snapshot unavailable');
+        const next = parseSnapshot(await response.json());
+        if (!this.isConnected) return;
+        snapshot = next;
+        for (const tag of selected) if (!next.monitors.some(row => row.tags.includes(tag))) selected.delete(tag);
+        render();
+      }).catch(() => {
+        if (!this.isConnected) return;
+        const error = this.querySelector<HTMLElement>('[data-error]')!;
+        error.textContent = 'Could not load the latest snapshot. Showing the copy included with this site build.'; error.hidden = false;
+      }).finally(() => clearTimeout(timeout));
+    }
+    disconnectedCallback() { this.cleanup?.(); }
+  }
+  if (!customElements.get('service-status')) customElements.define('service-status', ServiceStatus);
+</script>

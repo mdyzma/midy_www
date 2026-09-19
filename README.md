@@ -89,3 +89,13 @@ No deployment or real email delivery has been performed by the migration.
 - `/404.html` — not-found page.
 
 The former blog archive and article routes have been removed; their content remains in Git history. The site no longer includes blog links or Chart.js.
+
+## Service status MVP
+
+The Homelab page displays `public/status.json` with service-name search, status filtering, and multi-select tag filters (matching any selected tag). React remains exclusive to the contact form.
+
+The included file is **demo data**, not readings from Uptime Kuma. No Kuma connection, credentials, publishing job, or nightly schedule is configured by this MVP. The displayed 23:00 Europe/Warsaw time is the intended update schedule.
+
+JSON format: `version: 1`, `demo: boolean`, `generatedAt: ISO timestamp with timezone`, and `monitors: [{ id, name, status, responseMs, tags }]`. Valid status values are `up`, `down`, `maintenance`, and `unknown`; unavailable response times use `null`. IDs must be unique. Export only approved public names/tags and numeric results, never private monitor URLs, credentials, or error messages.
+
+The page renders a build-time fallback and fetches `/status.json` on arrival without browser caching. Invalid or unavailable JSON keeps the fallback visible with an error notice. Non-demo snapshots older than 26 hours are marked overdue. Without JavaScript, the build-time table remains visible. A future exporter should replace the JSON atomically only after a successful collection and publish it with the site; changing a file on your homelab alone does not update Cloudflare Pages.

@@ -3,6 +3,7 @@ import { getEntry, render } from 'astro:content';
 import { Server, ArrowUpRight, Bot, MessageSquare, Cpu } from '@lucide/astro';
 import Layout from '../layouts/Layout.astro';
 import { containerGroups } from '../data/homelab';
+import ServiceStatus from '../components/ServiceStatus.astro';
 const project = await getEntry('projects', 'homelab');
 if (!project) throw new Error('Homelab project content is missing.');
 const { Content } = await render(project);
@@ -28,6 +29,7 @@ const { Content } = await render(project);
         <div class="glass-panel p-6"><Cpu size={28} class="mb-4 text-primary" aria-hidden="true" /><h3 class="mb-2 text-xl font-bold">NVIDIA RTX 2070</h3><p class="leading-relaxed text-slate-300">Dedicated graphics hardware in an ASUS host with an Intel Core i5-4670 and 32 GB of RAM.</p><p class="mt-4 font-mono text-xs text-primary">LOCAL GPU HARDWARE</p></div>
       </div>
     </section>
+    <div class="mt-12"><ServiceStatus /></div>
     <figure class="mt-12">
       <a href="/proxmox-screen.png" target="_blank" rel="noopener noreferrer" aria-label="Open the full-size Proxmox screenshot" class="block overflow-hidden rounded-xl border border-slate-700 hover:border-primary">
         <img src="/proxmox-screen.png" alt="Proxmox dashboard showing the full console output, 15 running containers including Ollama and Open WebUI, and host hardware identifying an NVIDIA GeForce RTX 2070." width="1985" height="1916" loading="lazy" decoding="async" class="h-auto w-full" />

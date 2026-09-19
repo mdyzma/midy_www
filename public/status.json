@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "demo": true,
+  "generatedAt": "2026-09-18T21:00:00Z",
+  "monitors": [
+    {
+      "id": "1",
+      "name": "Ollama",
+      "tags": [
+        "AI",
+        "GPU"
+      ],
+      "status": "up",
+      "responseMs": 12
+    },
+    {
+      "id": "2",
+      "name": "Open WebUI",
+      "tags": [
+        "AI",
+        "Web"
+      ],
+      "status": "up",
+      "responseMs": 28
+    },
+    {
+      "id": "3",
+      "name": "Jupyter Notebook",
+      "tags": [
+        "AI",
+        "Development"
+      ],
+      "status": "up",
+      "responseMs": 9
+    },
+    {
+      "id": "4",
+      "name": "PostgreSQL",
+      "tags": [
+        "Data"
+      ],
+      "status": "up",
+      "responseMs": 4
+    },
+    {
+      "id": "5",
+      "name": "ClickHouse",
+      "tags": [
+        "Data"
+      ],
+      "status": "down",
+      "responseMs": null
+    },
+    {
+      "id": "6",
+      "name": "MongoDB",
+      "tags": [
+        "Data"
+      ],
+      "status": "up",
+      "responseMs": 12
+    },
+    {
+      "id": "7",
+      "name": "Redis",
+      "tags": [
+        "Data"
+      ],
+      "status": "up",
+      "responseMs": 28
+    },
+    {
+      "id": "8",
+      "name": "Neo4j",
+      "tags": [
+        "Data"
+      ],
+      "status": "unknown",
+      "responseMs": null
+    },
+    {
+      "id": "9",
+      "name": "cloudflared",
+      "tags": [
+        "Network"
+      ],
+      "status": "up",
+      "responseMs": 4
+    },
+    {
+      "id": "10",
+      "name": "Gitea",
+      "tags": [
+        "Development"
+      ],
+      "status": "up",
+      "responseMs": 18
+    },
+    {
+      "id": "11",
+      "name": "Jenkins",
+      "tags": [
+        "Development",
+        "Automation"
+      ],
+      "status": "maintenance",
+      "responseMs": null
+    },
+    {
+      "id": "12",
+      "name": "Apache Airflow",
+      "tags": [
+        "Data",
+        "Automation"
+      ],
+      "status": "up",
+      "responseMs": 28
+    },
+    {
+      "id": "13",
+      "name": "Prometheus",
+      "tags": [
+        "Monitoring"
+      ],
+      "status": "up",
+      "responseMs": 9
+    },
+    {
+      "id": "14",
+      "name": "Grafana",
+      "tags": [
+        "Monitoring",
+        "Web"
+      ],
+      "status": "up",
+      "responseMs": 4
+    },
+    {
+      "id": "15",
+      "name": "Uptime Kuma",
+      "tags": [
+        "Monitoring",
+        "Web"
+      ],
+      "status": "up",
+      "responseMs": 18
+    }
+  ]
+}

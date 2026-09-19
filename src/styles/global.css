@@ -60,3 +60,27 @@ button:disabled { cursor: wait; opacity: .65; }
   html { scroll-behavior: auto !important; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+.status-panel { padding: 2rem; scroll-margin-top: 6rem; }
+.status-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.status-schedule { color: #94a3b8; font-size: .8rem; }
+.status-notice { color: #fcd34d; background: #fbbf2410; border: 1px solid #fbbf2430; border-radius: .5rem; padding: .75rem 1rem; margin: 1.5rem 0 .75rem; font-size: .9rem; }
+.status-counts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1rem; margin: 1.5rem 0; }
+.status-counts > div { padding: 1rem; border-radius: .5rem; border: 1px solid var(--border); background: var(--bg-main); }
+.status-controls { display: flex; align-items: end; gap: 1rem; flex-wrap: wrap; }
+.status-controls label { display: grid; gap: .5rem; font-size: .8rem; color: #cbd5e1; }
+.status-controls label:first-child { flex: 1; min-width: 10rem; }
+.status-controls input, .status-controls select { min-width: 0; width: 100%; background: var(--bg-main); border: 1px solid var(--border); padding: .65rem .8rem; border-radius: .4rem; color: var(--text-main); font-size: .9rem; }
+.status-reset { padding: .65rem 0; font-size: .85rem; color: var(--primary); }
+.status-tag { padding: .35rem .8rem; border: 1px solid var(--border); border-radius: 999px; font-size: .8rem; color: #cbd5e1; }
+.status-tag[aria-pressed="true"] { color: var(--primary); border-color: var(--primary); background: #38bdf815; }
+.status-table-scroll { max-width: 100%; overflow-x: auto; }
+.status-table { width: 100%; border-collapse: collapse; text-align: left; font-size: .9rem; }
+.status-table th, .status-table td { padding: 1rem .75rem; border-bottom: 1px solid var(--border); }
+.status-table thead th { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: #94a3b8; }
+.status-table tbody th { font-weight: 500; }
+.status-table td { color: #cbd5e1; }
+.service-badge { display: inline-flex; align-items: center; gap: .4rem; text-transform: capitalize; font-size: .8rem; white-space: nowrap; }
+.service-badge::before { content: ''; width: .4rem; height: .4rem; border-radius: 50%; background: currentColor; }
+.service-up { color: #6ee7b7; } .service-down { color: #fda4af; } .service-maintenance { color: #fcd34d; } .service-unknown { color: #94a3b8; }
+@media (max-width: 640px) { .status-panel { padding: 1.25rem; } .status-counts { grid-template-columns: repeat(2,minmax(0,1fr)); } .status-table { min-width: 34rem; } }

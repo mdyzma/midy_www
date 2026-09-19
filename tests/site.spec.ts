@@ -16,10 +16,13 @@ test('Homelab navigation, direct loading and removed blog routes', async ({ page
   if (isMobile) await page.getByRole('button', { name: 'Close', exact: true }).click();
   await expect(page.getByRole('link', { name: 'View project on GitHub' })).toHaveAttribute('href', 'https://github.com/mdyzma/homelab');
   expect(await page.evaluate(() => (window as Window & { spaMarker?: string }).spaMarker)).toBe('alive');
+  await page.waitForFunction(() => !document.documentElement.hasAttribute('data-astro-transition'));
   await page.goBack();
   await expect(page).toHaveURL('/');
+  await page.waitForFunction(() => !document.documentElement.hasAttribute('data-astro-transition'));
   await page.goForward();
   await expect(page).toHaveURL('/homelab/');
+  await page.waitForFunction(() => !document.documentElement.hasAttribute('data-astro-transition'));
   await page.reload();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Homelab');
   expect((await request.get('/blog/')).status()).toBe(404);
@@ -78,4 +81,36 @@ test('contact is the only React island and supports failed delivery followed by 
   await expect(form.getByLabel('Message', { exact: true })).toHaveValue('');
   expect(keys[0]).toBe(keys[1]);
   expect(errors).toEqual([]);
+});
+
+test('status MVP filters demo services and shows an empty state', async ({ page }) => {
+  await page.goto('/homelab/#service-status');
+  const panel = page.locator('service-status');
+  await expect(panel.getByText('Demo data · not connected to Uptime Kuma')).toBeVisible();
+  await expect(panel.locator('tbody tr')).toHaveCount(15);
+  await panel.getByRole('button', { name: 'AI', exact: true }).click();
+  await expect(panel.locator('tbody tr')).toHaveCount(3);
+  await panel.getByRole('button', { name: 'Monitoring', exact: true }).click();
+  await expect(panel.locator('tbody tr')).toHaveCount(6);
+  await panel.getByLabel('Status', { exact: true }).selectOption('down');
+  await expect(panel.locator('[data-empty]')).toBeVisible();
+  await panel.getByRole('button', { name: 'Reset filters' }).click();
+  await panel.getByLabel('Find a service').fill('ollama');
+  await expect(panel.locator('tbody tr')).toHaveCount(1);
+  await expect(panel.locator('tbody')).toContainText('Ollama');
+});
+
+test('status MVP marks old snapshots stale and retains the fallback on errors', async ({ page }) => {
+  await page.route('**/status.json', route => route.fulfill({ json: {version:1, demo:false, generatedAt:'2020-01-01T00:00:00Z', monitors:[{id:'1',name:'Test monitor',status:'unknown',responseMs:null,tags:['Test']}]}}));
+  await page.goto('/homelab/#service-status');
+  const panel = page.locator('service-status');
+  await expect(panel.locator('[data-freshness]')).toContainText('Snapshot overdue');
+  await expect(panel.locator('tbody tr')).toHaveCount(1);
+  await expect(panel.locator('[data-demo-note]')).toBeHidden();
+  await page.unroute('**/status.json');
+  await page.route('**/status.json', route => route.fulfill({json:{broken:true}}));
+  await page.reload();
+  await expect(panel.getByRole('alert')).toContainText('Could not load');
+  await expect(panel.locator('tbody tr')).toHaveCount(15);
+  await expect(panel.locator('[data-freshness]')).toContainText('Demo data');
 });
