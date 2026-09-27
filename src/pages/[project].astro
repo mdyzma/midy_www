@@ -5,6 +5,7 @@ import Layout from '../layouts/Layout.astro';
 import { projects } from '../data/projects';
 import { Image } from 'astro:assets';
 import yapcoBrand from '../assets/yapco-brand.jpeg';
+import audiobookImage from '../assets/audiobook-factory.jpeg';
 import YapcoShowcase from '../components/YapcoShowcase.astro';
 export async function getStaticPaths() {
   return Promise.all(projects.filter(project => project.id !== 'homelab').map(async project => {
@@ -26,6 +27,7 @@ const Icon = entry.id === 'yapco' ? CalendarDays : Headphones;
       <h1 class="mb-6 text-4xl font-bold md:text-5xl">{entry.data.title}</h1>
       <p class="mb-8 text-xl leading-relaxed text-slate-300">{entry.data.description}</p>
       {entry.id === 'yapco' && <Image src={yapcoBrand} alt="Yapco — Yet Another Planner Creator" widths={[400, 800, 1600]} sizes="(min-width: 816px) 768px, calc(100vw - 48px)" width={800} class="mb-8 h-auto w-full rounded-2xl" />}
+      {entry.id === 'audiobook-factory' && <Image src={audiobookImage} alt="Illustration of the Audiobook Factory workflow: a book and microphone, audio processing, quality checks, and an audiobook download" widths={[400, 800, 1600]} sizes="(min-width: 816px) 768px, calc(100vw - 48px)" width={800} class="mb-8 h-auto w-full rounded-2xl" />}
       <ul class="mb-8 flex flex-wrap gap-3" aria-label="Project technologies">{entry.data.tags.map(tag => <li class="rounded border border-slate-700 bg-slate-800 px-3 py-2 font-mono text-sm text-primary">{tag}</li>)}</ul>
       <div class="glass-panel space-y-5 p-6 leading-relaxed text-slate-300 md:p-8"><Content /></div>
       {entry.id === 'yapco' && <YapcoShowcase />}
