@@ -1,0 +1,35 @@
+---
+import { getEntry, render, type CollectionEntry } from 'astro:content';
+import { CalendarDays, Headphones, ArrowLeft, ArrowUpRight } from '@lucide/astro';
+import Layout from '../layouts/Layout.astro';
+import { projects } from '../data/projects';
+import { Image } from 'astro:assets';
+import yapcoBrand from '../assets/yapco-brand.jpeg';
+import YapcoShowcase from '../components/YapcoShowcase.astro';
+export async function getStaticPaths() {
+  return Promise.all(projects.filter(project => project.id !== 'homelab').map(async project => {
+    const entry = await getEntry('projects', project.id);
+    if (!entry) throw new Error(`Missing project: ${project.id}`);
+    return { params: { project: project.id }, props: { entry } };
+  }));
+}
+interface Props { entry: CollectionEntry<'projects'> }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const Icon = entry.id === 'yapco' ? CalendarDays : Headphones;
+---
+<Layout title={`${entry.data.title} | Michal Dyzma`} description={entry.data.description}>
+  <section class="container mx-auto px-6 pt-32 pb-20">
+    <a href="/#projects" class="mb-10 inline-flex items-center gap-2 text-primary"><ArrowLeft size={18} aria-hidden="true" />All projects</a>
+    <div class="max-w-3xl">
+      <Icon size={44} class="mb-6 text-primary" aria-hidden="true" />
+      <h1 class="mb-6 text-4xl font-bold md:text-5xl">{entry.data.title}</h1>
+      <p class="mb-8 text-xl leading-relaxed text-slate-300">{entry.data.description}</p>
+      {entry.id === 'yapco' && <Image src={yapcoBrand} alt="Yapco — Yet Another Planner Creator" widths={[400, 800, 1600]} sizes="(min-width: 816px) 768px, calc(100vw - 48px)" width={800} class="mb-8 h-auto w-full rounded-2xl" />}
+      <ul class="mb-8 flex flex-wrap gap-3" aria-label="Project technologies">{entry.data.tags.map(tag => <li class="rounded border border-slate-700 bg-slate-800 px-3 py-2 font-mono text-sm text-primary">{tag}</li>)}</ul>
+      <div class="glass-panel space-y-5 p-6 leading-relaxed text-slate-300 md:p-8"><Content /></div>
+      {entry.id === 'yapco' && <YapcoShowcase />}
+      <a href={entry.data.repository} target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 rounded bg-primary px-6 py-3 font-bold text-slate-900">View project on GitHub <ArrowUpRight size={18} aria-hidden="true" /></a>
+    </div>
+  </section>
+</Layout>

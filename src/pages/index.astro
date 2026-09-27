@@ -4,21 +4,30 @@ import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Stack from '../components/Stack.astro';
 import { getEntry } from 'astro:content';
-import { Server, ArrowRight } from '@lucide/astro';
-const project = await getEntry('projects', 'homelab');
-if (!project) throw new Error('Homelab project content is missing.');
+import { Server, CalendarDays, Headphones, ArrowRight } from '@lucide/astro';
+import { projects } from '../data/projects';
+const icons = { homelab: Server, yapco: CalendarDays, 'audiobook-factory': Headphones };
+const entries = await Promise.all(projects.map(async project => {
+  const entry = await getEntry('projects', project.id);
+  if (!entry) throw new Error(`Missing project: ${project.id}`);
+  return { ...project, entry };
+}));
 ---
 <Layout title="Michal Dyzma | Data & AI Automation" description="Michal Dyzma — data engineering, AI integration, and process automation. ETL pipelines, vector RAG systems, and autonomous agent workflows.">
   <Hero />
   <About />
   <Stack />
-  <section id="homelab" class="border-y border-slate-700 py-24">
+  <section id="projects" class="border-y border-slate-700 py-24">
     <div class="container mx-auto px-6">
-      <div class="glass-panel max-w-3xl p-8">
-        <Server size={36} class="mb-5 text-primary" aria-hidden="true" />
-        <h2 class="mb-4 text-3xl font-bold">Homelab</h2>
-        <p class="mb-6 leading-relaxed text-slate-400">{project.data.description}</p>
-        <a href="/homelab/" class="inline-flex items-center gap-2 font-medium text-primary">Explore the homelab <ArrowRight size={18} aria-hidden="true" /></a>
+      <h2 class="mb-4 text-3xl font-bold">Projects</h2>
+      <p class="mb-10 text-slate-400">Things I build: infrastructure, useful tools, and local AI.</p>
+      <div class="grid gap-6 lg:grid-cols-3">
+        {entries.map(project => { const Icon = icons[project.id]; return <article id={project.id} class="glass-panel flex flex-col p-8">
+          <Icon size={36} class="mb-5 text-primary" aria-hidden="true" />
+          <h3 class="mb-4 text-2xl font-bold">{project.title}</h3>
+          <p class="mb-6 flex-1 leading-relaxed text-slate-400">{project.entry.data.description}</p>
+          <a href={project.href} class="inline-flex items-center gap-2 font-medium text-primary">{project.id === 'homelab' ? 'Explore the homelab' : `Explore ${project.title}`} <ArrowRight size={18} aria-hidden="true" /></a>
+        </article>; })}
       </div>
     </div>
   </section>

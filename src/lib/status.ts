@@ -18,7 +18,7 @@ export function parseSnapshot(input: unknown): Snapshot {
 }
 
 export function freshness(snapshot: Snapshot, now = Date.now()) {
-  if (snapshot.demo) return 'Demo data · not connected to Uptime Kuma';
+  if (snapshot.demo) return 'Sample snapshot';
   const age = now - Date.parse(snapshot.generatedAt);
   if (age < -300_000) return 'Check snapshot timestamp · it is in the future';
   return age > 26 * 60 * 60 * 1000 ? 'Snapshot overdue · showing the last available results' : 'Daily snapshot · not live';

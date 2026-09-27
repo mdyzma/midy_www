@@ -84,3 +84,10 @@ button:disabled { cursor: wait; opacity: .65; }
 .service-badge::before { content: ''; width: .4rem; height: .4rem; border-radius: 50%; background: currentColor; }
 .service-up { color: #6ee7b7; } .service-down { color: #fda4af; } .service-maintenance { color: #fcd34d; } .service-unknown { color: #94a3b8; }
 @media (max-width: 640px) { .status-panel { padding: 1.25rem; } .status-counts { grid-template-columns: repeat(2,minmax(0,1fr)); } .status-table { min-width: 34rem; } }
+
+.project-nav { display: flex; align-items: center; gap: .25rem; position: relative; }
+.project-dropdown summary { display: flex; align-items: center; justify-content: center; padding: .5rem; cursor: pointer; list-style: none; border-radius: .25rem; }
+.project-dropdown summary::-webkit-details-marker { display: none; }
+.project-dropdown[open] summary { color: var(--primary); }
+.project-menu { position: absolute; top: calc(100% + .5rem); left: 0; min-width: 14rem; padding: .5rem; background: var(--bg-main); box-shadow: 0 12px 30px #0005; }
+@media (max-width: 767px) { .project-nav { flex-wrap: wrap; } .project-dropdown { flex: 1; } .project-menu { position: static; margin-top: .5rem; } }

@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import designer from '../assets/yapco-designer.png';
+import dashboard from '../assets/yapco-dashboard.png';
+import exportScreen from '../assets/yapco-export.png';
+import YapcoEditions from './YapcoEditions.astro';
+const features = [
+  ['Build a complete planner', 'Choose daily or weekly templates, dates, language, and A4 or A5 pages.'],
+  ['Customize visually', 'Arrange page elements and change one page or every page using its template.'],
+  ['Choose your modules', 'Start with Basic, Balance, or Recovery Edition and enable the sections you need.'],
+  ['Prepare for printing', 'Export PDFs for duplex printing, including two A5 pages on an A4 sheet.'],
+  ['Keep your work locally', 'Save planners in your browser and download JSON backups.'],
+  ['Work offline', 'Edit and print from the browser offline; PDF generation needs the export service.'],
+];
+---
+<section class="mt-14" aria-labelledby="yapco-features">
+  <h2 id="yapco-features" class="mb-6 text-3xl font-bold">What you can do</h2>
+  <dl class="grid gap-4 sm:grid-cols-2">
+    {features.map(([title, description]) => <div class="glass-panel p-6">
+      <dt class="mb-2 text-lg font-semibold">{title}</dt>
+      <dd class="leading-relaxed text-slate-400">{description}</dd>
+    </div>)}
+  </dl>
+  <p class="mt-5 text-sm text-slate-400">Explore the <a class="text-primary underline underline-offset-4" href="https://github.com/mdyzma/yapco#what-you-can-do">full feature list</a> or <a class="text-primary underline underline-offset-4" href="https://planner.midysmart.com/docs/guides/editions/">compare planner editions</a>.</p>
+</section>
+<section class="mt-14" aria-labelledby="yapco-designer">
+  <h2 id="yapco-designer" class="mb-6 text-3xl font-bold">Inside the planner designer</h2>
+  <figure>
+    <a href={designer.src} target="_blank" rel="noopener noreferrer" aria-label="Open full-size planner designer screenshot">
+      <Image src={designer} alt="Yapco designer with page navigation, a central planner canvas, and element properties" widths={[600, 1000, 1600]} sizes="(min-width: 816px) 768px, calc(100vw - 48px)" width={1000} class="h-auto w-full rounded-xl border border-slate-700" loading="lazy" />
+    </a>
+    <figcaption class="mt-3 text-sm leading-relaxed text-slate-400">Browse pages on the left, design on the canvas, and fine-tune elements on the right. Select any screenshot to view it full size.</figcaption>
+  </figure>
+  <div class="mt-8 grid gap-6 sm:grid-cols-2">
+    {[{image: dashboard, title: 'Create your planner', caption: 'Choose a template, edition, format, and dates.'}, {image: exportScreen, title: 'Get ready to print', caption: 'Choose planner sections and two-sided printing settings.'}].map(item => <figure>
+      <a href={item.image.src} target="_blank" rel="noopener noreferrer" aria-label={`Open full-size screenshot: ${item.title}`}>
+        <Image src={item.image} alt={item.title} widths={[400, 800]} sizes="(min-width: 640px) 372px, calc(100vw - 48px)" width={800} class="h-auto w-full rounded-xl border border-slate-700" loading="lazy" />
+      </a>
+      <figcaption class="mt-3 text-sm text-slate-400"><strong class="mb-1 block text-base text-slate-200">{item.title}</strong>{item.caption}</figcaption>
+    </figure>)}
+  </div>
+</section>
+<YapcoEditions />

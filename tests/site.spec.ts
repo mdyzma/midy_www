@@ -12,6 +12,7 @@ test('Homelab navigation, direct loading and removed blog routes', async ({ page
   await expect(page).toHaveURL('/homelab/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Homelab');
   if (isMobile) await page.getByRole('button', { name: 'Menu', exact: true }).click();
+  await page.getByLabel('Toggle project links').click();
   await expect(page.getByRole('navigation').getByRole('link', { name: 'Homelab' })).toHaveAttribute('aria-current', 'page');
   if (isMobile) await page.getByRole('button', { name: 'Close', exact: true }).click();
   await expect(page.getByRole('link', { name: 'View project on GitHub' })).toHaveAttribute('href', 'https://github.com/mdyzma/homelab');
@@ -86,7 +87,7 @@ test('contact is the only React island and supports failed delivery followed by 
 test('status MVP filters demo services and shows an empty state', async ({ page }) => {
   await page.goto('/homelab/#service-status');
   const panel = page.locator('service-status');
-  await expect(panel.getByText('Demo data · not connected to Uptime Kuma')).toBeVisible();
+  await expect(panel.getByText('Sample snapshot')).toBeVisible();
   await expect(panel.locator('tbody tr')).toHaveCount(15);
   await panel.getByRole('button', { name: 'AI', exact: true }).click();
   await expect(panel.locator('tbody tr')).toHaveCount(3);
@@ -106,11 +107,35 @@ test('status MVP marks old snapshots stale and retains the fallback on errors', 
   const panel = page.locator('service-status');
   await expect(panel.locator('[data-freshness]')).toContainText('Snapshot overdue');
   await expect(panel.locator('tbody tr')).toHaveCount(1);
-  await expect(panel.locator('[data-demo-note]')).toBeHidden();
+  await expect(panel.locator('[data-freshness]')).not.toContainText('Sample snapshot');
   await page.unroute('**/status.json');
   await page.route('**/status.json', route => route.fulfill({json:{broken:true}}));
   await page.reload();
   await expect(panel.getByRole('alert')).toContainText('Could not load');
   await expect(panel.locator('tbody tr')).toHaveCount(15);
-  await expect(panel.locator('[data-freshness]')).toContainText('Demo data');
+  await expect(panel.locator('[data-freshness]')).toContainText('Sample snapshot');
+});
+
+test('Projects link, dropdown and individual pages work', async ({ page, isMobile }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await expect(page.locator('#projects article')).toHaveCount(3);
+  if (isMobile) await page.getByRole('button', { name: 'Menu', exact: true }).click();
+  await page.getByRole('navigation').getByRole('link', { name: 'My Projects', exact: true }).click();
+  await expect(page).toHaveURL('/#projects');
+  if (isMobile) await page.getByRole('button', { name: 'Menu', exact: true }).click();
+  const toggle = page.getByLabel('Toggle project links');
+  await toggle.click();
+  await expect(page.getByRole('navigation').getByRole('link', { name: 'Audiobook Factory' })).toBeVisible();
+  await toggle.press('Escape');
+  await expect(page.locator('.project-dropdown')).not.toHaveAttribute('open');
+  await toggle.click();
+  await page.getByRole('navigation').getByRole('link', { name: 'Yapco', exact: true }).click();
+  await expect(page).toHaveURL('/yapco/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Yapco');
+  await expect(page.getByRole('link', { name: 'View project on GitHub' })).toHaveAttribute('href', 'https://github.com/mdyzma/yapco');
+  await page.goto('/audiobook-factory/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Audiobook Factory');
+  await expect(page.getByRole('link', { name: 'View project on GitHub' })).toHaveAttribute('href', 'https://github.com/mdyzma/audiobook-factory');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
 });

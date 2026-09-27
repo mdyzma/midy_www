@@ -99,3 +99,7 @@ The included file is **demo data**, not readings from Uptime Kuma. No Kuma conne
 JSON format: `version: 1`, `demo: boolean`, `generatedAt: ISO timestamp with timezone`, and `monitors: [{ id, name, status, responseMs, tags }]`. Valid status values are `up`, `down`, `maintenance`, and `unknown`; unavailable response times use `null`. IDs must be unique. Export only approved public names/tags and numeric results, never private monitor URLs, credentials, or error messages.
 
 The page renders a build-time fallback and fetches `/status.json` on arrival without browser caching. Invalid or unavailable JSON keeps the fallback visible with an error notice. Non-demo snapshots older than 26 hours are marked overdue. Without JavaScript, the build-time table remains visible. A future exporter should replace the JSON atomically only after a successful collection and publish it with the site; changing a file on your homelab alone does not update Cloudflare Pages.
+
+## Projects navigation
+
+The Projects link scrolls to `/#projects`; its adjacent dropdown opens Homelab, Yapco, and Audiobook Factory. Project order and paths live in `src/data/projects.ts`, and descriptions live in `src/content/projects/`. `/homelab/` retains its custom infrastructure and status sections; `/yapco/` and `/audiobook-factory/` use the shared project page template in `src/pages/[project].astro`. Cards share their descriptions with the individual pages.

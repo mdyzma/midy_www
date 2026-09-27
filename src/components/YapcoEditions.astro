@@ -1,0 +1,29 @@
+---
+import rows from '../data/yapco-editions.json';
+const labels: Record<string, string> = { '●': 'domyślnie włączone', '○': 'moduł opcjonalny', '—': 'brak w tym wariancie' };
+const groups = rows.reduce<string[][][]>((groups, row) => {
+  if (row.slice(1).every(cell => !cell)) groups.push([row]);
+  else groups[groups.length - 1].push(row);
+  return groups;
+}, []);
+---
+<section class="mt-14" lang="pl" aria-labelledby="yapco-editions">
+  <h2 id="yapco-editions" class="mb-4 text-3xl font-bold">Co zawiera każdy wariant</h2>
+  <p class="mb-5 text-sm text-slate-400">● domyślnie włączone · ○ moduł opcjonalny · — brak w tym wariancie</p>
+  <div class="relative overflow-x-auto rounded-xl border border-slate-700 focus-visible:outline-2 focus-visible:outline-primary" tabindex="0" role="region" aria-label="Porównanie wariantów planera — przewiń poziomo na małym ekranie">
+    <table class="w-full min-w-[680px] border-collapse text-sm">
+      <caption class="sr-only">Porównanie elementów wariantów Podstawowy, Balans i Terapeutyczny</caption>
+      <thead class="bg-slate-800">
+        <tr><th scope="col" class="p-4 text-left">Element</th>{['Podstawowy', 'Balans', 'Terapeutyczny'].map(title => <th scope="col" class="p-4 text-center">{title}</th>)}</tr>
+      </thead>
+      {groups.map(group => <tbody>
+        <tr class="border-t border-slate-700 bg-slate-800/70"><th colspan="4" scope="rowgroup" class="p-4 text-left font-semibold text-primary">{group[0][0]}</th></tr>
+        {group.slice(1).map(row => <tr class="border-t border-slate-700/60">
+          <th scope="row" class="p-4 text-left font-normal leading-relaxed text-slate-300">{row[0]}</th>
+          {row.slice(1).map(cell => <td class="p-4 text-center text-slate-200">{labels[cell] ? <><span aria-hidden="true">{cell}</span><span class="sr-only">{labels[cell]}</span></> : cell}</td>)}
+        </tr>)}
+      </tbody>)}
+    </table>
+  </div>
+  <p class="mt-4 text-sm text-slate-400">Źródło: <a href="https://planner.midysmart.com/docs/guides/editions/#co-zawiera-ka%C5%BCdy-wariant" class="text-primary underline underline-offset-4">dokumentacja Yapco — warianty „Dzień po Dniu”</a>.</p>
+</section>

@@ -1,8 +1,9 @@
 ---
-import { Menu } from '@lucide/astro';
+import { Menu, ChevronDown } from '@lucide/astro';
+import { projects } from '../data/projects';
 interface Props { pathname: string }
 const { pathname } = Astro.props;
-const links = [['/#about', 'Philosophy'], ['/#stack', 'Stack'], ['/homelab/', 'Homelab'], ['/#contact', 'Connect']];
+const links = [['/#about', 'Philosophy'], ['/#stack', 'Stack'], ['/#contact', 'Connect']];
 ---
 <site-navigation class="block">
   <header class="site-header fixed inset-x-0 top-0 z-50 border-b border-slate-700">
@@ -10,17 +11,33 @@ const links = [['/#about', 'Philosophy'], ['/#stack', 'Stack'], ['/homelab/', 'H
       <a href="/" class="font-mono text-lg font-bold tracking-tighter text-primary" aria-label="Michal Dyzma home">&lt;Michal_Dyzma /&gt;</a>
       <button hidden type="button" class="rounded border border-slate-600 px-3 py-2 text-sm md:hidden" aria-expanded="false" aria-controls="site-navigation"><Menu size={16} class="inline" aria-hidden="true" /> <span>Menu</span></button>
       <nav id="site-navigation" aria-label="Main navigation" class="flex w-full flex-col gap-5 pb-2 text-sm font-medium text-slate-300 md:w-auto md:flex-row md:gap-8 md:pb-0">
-        {links.map(([href, label]) => <a href={href} aria-current={href === '/homelab/' && pathname.startsWith('/homelab/') ? 'page' : undefined} class="py-1 transition-colors hover:text-primary aria-[current=page]:text-primary">{label}</a>)}
+        {links.slice(0, 2).map(([href, label]) => <a href={href} aria-current={href === '/homelab/' && pathname.startsWith('/homelab/') ? 'page' : undefined} class="py-1 transition-colors hover:text-primary aria-[current=page]:text-primary">{label}</a>)}
+        <div class="project-nav">
+          <a href="/#projects" class:list={['py-1 hover:text-primary', { 'text-primary': projects.some(project => pathname === project.href) }]}>My Projects</a>
+          <details class="project-dropdown">
+            <summary aria-label="Toggle project links"><ChevronDown size={18} aria-hidden="true" /></summary>
+            <ul class="project-menu glass-panel">
+              {projects.map(project => <li><a href={project.href} aria-current={pathname === project.href ? 'page' : undefined} class="block rounded px-4 py-3 hover:bg-slate-700 aria-[current=page]:text-primary">{project.title}</a></li>)}
+            </ul>
+          </details>
+        </div>
+        <a href="/#contact" class="py-1 hover:text-primary">Connect</a>
       </nav>
     </div>
   </header>
 </site-navigation>
 <script>
   class SiteNavigation extends HTMLElement {
+    private cleanup?: () => void;
     connectedCallback() {
+      this.cleanup?.();
       const button = this.querySelector('button')!;
       const nav = this.querySelector('nav')!;
       const label = button.querySelector('span')!;
+      const dropdown = this.querySelector('details')!;
+      const controller = new AbortController();
+      document.addEventListener('click', event => { if (!dropdown.contains(event.target as Node)) dropdown.open = false; }, { signal: controller.signal });
+      this.cleanup = () => controller.abort();
       const setOpen = (open: boolean) => {
         button.setAttribute('aria-expanded', String(open));
         label.textContent = open ? 'Close' : 'Menu';
@@ -29,9 +46,10 @@ const links = [['/#about', 'Philosophy'], ['/#stack', 'Stack'], ['/homelab/', 'H
       button.hidden = false;
       setOpen(false);
       button.onclick = () => setOpen(button.getAttribute('aria-expanded') !== 'true');
-      nav.onclick = event => { if ((event.target as Element).closest('a')) setOpen(false); };
-      this.onkeydown = event => { if (event.key === 'Escape') { setOpen(false); button.focus(); } };
+      nav.onclick = event => { if ((event.target as Element).closest('a')) { dropdown.open = false; setOpen(false); } };
+      this.onkeydown = event => { if (event.key === 'Escape') { if (dropdown.open) { dropdown.open = false; dropdown.querySelector('summary')!.focus(); } else { setOpen(false); button.focus(); } } };
     }
+    disconnectedCallback() { this.cleanup?.(); }
   }
   if (!customElements.get('site-navigation')) customElements.define('site-navigation', SiteNavigation);
 </script>
